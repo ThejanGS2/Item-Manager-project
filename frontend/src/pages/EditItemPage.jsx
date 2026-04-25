@@ -27,7 +27,8 @@ function EditItemPage() {
       navigate("/");
     } catch (error) {
       console.error("Failed to update item", error);
-      alert("Failed to update item");
+      const message = error.response?.data?.message || "Failed to update item";
+      alert(message);
     }
   };
 

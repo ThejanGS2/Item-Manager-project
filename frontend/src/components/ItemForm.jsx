@@ -2,13 +2,20 @@ import { useState } from "react";
 
 function ItemForm({ initialValues, onSubmit, submitText }) {
   const [formData, setFormData] = useState(
-    initialValues || {
-      name: "",
-      category: "",
-      price: "",
-      description: "",
-      imageUrl: "",
-    }
+    initialValues
+      ? {
+          ...initialValues,
+          discountPercentage:
+            initialValues.discountPercentage ?? initialValues.DiscountPercentage ?? "",
+        }
+      : {
+          name: "",
+          category: "",
+          price: "",
+          description: "",
+          discountPercentage: "",
+          imageUrl: "",
+        }
   );
 
   const handleChange = (e) => {
@@ -21,6 +28,7 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
     onSubmit({
       ...formData,
       price: Number(formData.price),
+      discountPercentage: Number(formData.discountPercentage),
     });
   };
 
@@ -51,6 +59,13 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
         onChange={handleChange}
         required
       />
+
+      <label>Discount Percentage</label>
+      <input
+        type="number"
+        name="discountPercentage"
+        value={formData.discountPercentage}
+        onChange={handleChange} />
 
       <label>Image URL</label>
       <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
